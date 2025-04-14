@@ -28,38 +28,42 @@ namespace Szeminarium1_24_02_17_2
             uint vao = Gl.GenVertexArray();
             Gl.BindVertexArray(vao);
 
-            // counter clockwise is front facing
             float[] vertexArray = new float[] {
-                x-0.5f, y+0.5f, z+0.5f,
-                x+0.5f, y+0.5f, z+0.5f,
-                x+0.5f, y+0.5f, z-0.5f,
-                x-0.5f, y+0.5f, z-0.5f,
+                // Top face (normal 0,1,0)
+                x-0.5f, y+0.5f, z+0.5f, 0f, 1f, 0f,
+                x+0.5f, y+0.5f, z+0.5f, 0f, 1f, 0f,
+                x+0.5f, y+0.5f, z-0.5f, 0f, 1f, 0f,
+                x-0.5f, y+0.5f, z-0.5f, 0f, 1f, 0f,
 
-                x-0.5f, y+0.5f, z+0.5f,
-                x-0.5f, y-0.5f, z+0.5f,
-                x+0.5f, y-0.5f, z+0.5f,
-                x+0.5f, y+0.5f, z+0.5f,
+                // Front face (normal 0,0,1)
+                x-0.5f, y+0.5f, z+0.5f, 0f, 0f, 1f,
+                x-0.5f, y-0.5f, z+0.5f, 0f, 0f, 1f,
+                x+0.5f, y-0.5f, z+0.5f, 0f, 0f, 1f,
+                x+0.5f, y+0.5f, z+0.5f, 0f, 0f, 1f,
 
-                x-0.5f, y+0.5f, z+0.5f,
-                x-0.5f, y+0.5f, z-0.5f,
-                x-0.5f, y-0.5f, z-0.5f,
-                x-0.5f, y-0.5f, z+0.5f,
+                // Left face (normal -1,0,0)
+                x-0.5f, y+0.5f, z+0.5f, -1f, 0f, 0f,
+                x-0.5f, y+0.5f, z-0.5f, -1f, 0f, 0f,
+                x-0.5f, y-0.5f, z-0.5f, -1f, 0f, 0f,
+                x-0.5f, y-0.5f, z+0.5f, -1f, 0f, 0f,
 
-                x-0.5f, y-0.5f, z+0.5f,
-                x+0.5f, y-0.5f, z+0.5f,
-                x+0.5f, y-0.5f, z - 0.5f,
-                x-0.5f, y-0.5f, z - 0.5f,
+                // Bottom face (normal 0,-1,0)
+                x-0.5f, y-0.5f, z+0.5f, 0f, -1f, 0f,
+                x+0.5f, y-0.5f, z+0.5f, 0f, -1f, 0f,
+                x+0.5f, y-0.5f, z-0.5f, 0f, -1f, 0f,
+                x-0.5f, y-0.5f, z-0.5f, 0f, -1f, 0f,
 
-                x+0.5f, y+0.5f, z - 0.5f,
-                x-0.5f, y+0.5f, z - 0.5f,
-                x-0.5f, y-0.5f, z - 0.5f,
-                x+0.5f, y-0.5f, z - 0.5f,
-                    
-                x+0.5f, y+0.5f, z + 0.5f,
-                x+0.5f, y+0.5f, z - 0.5f,
-                x+0.5f, y-0.5f, z - 0.5f,
-                x+0.5f, y-0.5f, z + 0.5f,
+                // Back face (normal 0,0,-1)
+                x+0.5f, y+0.5f, z-0.5f, 0f, 0f, -1f,
+                x-0.5f, y+0.5f, z-0.5f, 0f, 0f, -1f,
+                x-0.5f, y-0.5f, z-0.5f, 0f, 0f, -1f,
+                x+0.5f, y-0.5f, z-0.5f, 0f, 0f, -1f,
 
+                // Right face (normal 1,0,0)
+                x+0.5f, y+0.5f, z+0.5f, 1f, 0f, 0f,
+                x+0.5f, y+0.5f, z-0.5f, 1f, 0f, 0f,
+                x+0.5f, y-0.5f, z-0.5f, 1f, 0f, 0f,
+                x+0.5f, y-0.5f, z+0.5f, 1f, 0f, 0f,
             };
 
             List<float> colorsList = new List<float>();
@@ -97,8 +101,14 @@ namespace Szeminarium1_24_02_17_2
             uint vertices = Gl.GenBuffer();
             Gl.BindBuffer(GLEnum.ArrayBuffer, vertices);
             Gl.BufferData(GLEnum.ArrayBuffer, (ReadOnlySpan<float>)vertexArray.AsSpan(), GLEnum.StaticDraw);
-            Gl.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 0, null);
+
+            // Position attribute (location 0)
+            Gl.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), (void*)0);
             Gl.EnableVertexAttribArray(0);
+
+            // Normal attribute (location 2)
+            Gl.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+            Gl.EnableVertexAttribArray(2);
 
             uint colors = Gl.GenBuffer();
             Gl.BindBuffer(GLEnum.ArrayBuffer, colors);

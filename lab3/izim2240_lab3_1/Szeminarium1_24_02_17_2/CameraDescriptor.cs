@@ -4,25 +4,19 @@ namespace Szeminarium1_24_02_17_2
 {
     internal class CameraDescriptor
     {
-        private double DistanceToOrigin = 10;
+        private double DistanceToOrigin = 1;
 
-        private double AngleToZYPlane = 0.5;
+        private double AngleToZYPlane = 0;
 
-        private double AngleToZXPlane = 0.5;
+        private double AngleToZXPlane = 0;
 
         private const double DistanceScaleFactor = 1.1;
 
         private const double AngleChangeStepSize = Math.PI / 180 * 5;
 
-        private Character targetCharacter;
-
         /// <summary>
         /// Gets the position of the camera.
         /// </summary>
-        public void setCharacter(Character character)
-        {
-            targetCharacter = character;
-        }
         public Vector3D<float> Position
         {
             get
@@ -50,11 +44,7 @@ namespace Szeminarium1_24_02_17_2
             get
             {
                 // For the moment the camera is always pointed at the origin.
-                return targetCharacter.Position;
-            }
-            set
-            {
-
+                return Vector3D<float>.Zero;
             }
         }
 
