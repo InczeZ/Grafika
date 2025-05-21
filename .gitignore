@@ -398,3 +398,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Project
+
+projekt/JustParkIt/.vscode
+projekt/JustParkIt/UserSettings
+projekt/JustParkIt/Library
